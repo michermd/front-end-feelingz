@@ -8,6 +8,48 @@ class WebcamCapture extends Component {
       currentPicture: ''
     }
 
+    analizeImg = () => {
+        console.log(this.props.selfie.secure_url);
+        const request = require('request');
+
+        // Replace <Subscription Key> with your valid subscription key.
+        const subscriptionKey = process.env.REACT_APP_KEY_1;
+
+        // You must use the same location in your REST call as you used to get your
+        // subscription keys. For example, if you got your subscription keys from
+        // westus, replace "westcentralus" in the URL below with "westus".
+        const uriBase = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/detect';
+
+        const imageUrl = this.props.selfie.secure_url;
+
+        // Request parameters.
+        const params = {
+            'returnFaceId': 'true',
+            'returnFaceLandmarks': 'false',
+            'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
+                'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+        };
+
+        const options = {
+            uri: uriBase,
+            qs: params,
+            body: '{"url": ' + '"' + imageUrl + '"}',
+            headers: {
+                'Content-Type': 'application/json',
+                'Ocp-Apim-Subscription-Key' : subscriptionKey
+            }
+        };
+
+        request.post(options, (error, response, body) => {
+          if (error) {
+            console.log('Error: ', error);
+            return;
+          }
+          let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
+          console.log('JSON Response', jsonResponse);
+        });
+    }
+
     displayWebcam = () => {
       if (this.props.webcamStatus) {
       const videoConstraints = {
@@ -31,6 +73,7 @@ class WebcamCapture extends Component {
           <div>
             <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" aria-hidden="true" />
             <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Send photo</button>
+            <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.analizeImg(this.props.selfie)}>Analize Emotion</button>
           </div>
         </div>
       );
@@ -52,6 +95,7 @@ class WebcamCapture extends Component {
     };
 
     render() {
+      console.log(this.props.selfie);
 
       return(
         <div>

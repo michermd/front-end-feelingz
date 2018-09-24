@@ -9,7 +9,8 @@ var cloudinary = require('cloudinary')
 class App extends Component {
 
   state = {
-    showWebcam: false
+    showWebcam: false,
+    selfie: null
   }
 
   uploadWidget = (imageSrc) => {
@@ -19,7 +20,12 @@ class App extends Component {
       api_key: process.env.REACT_APP_API_KEY,
       api_secret: process.env.REACT_APP_SECRET_KEY
     });
-    cloudinary.uploader.upload(imageSrc, function(result) { console.log(result) })
+    cloudinary.uploader.upload(imageSrc, (result) => {
+      this.setState({
+        selfie: result
+      });
+    })
+
   }
 
   showWebcam = e => {
@@ -36,7 +42,7 @@ class App extends Component {
       <div>
         <h1>This is the Feelingz App from Mich!</h1>
         <div className="App-components">
-          <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture}/>
+          <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.state.selfie}/>
         </div>
       </div>
     );
