@@ -1,18 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import WebcamCapture from './components/WebcamCapture.js';
+
+var cloudinary = require('cloudinary')
+
+
 class App extends Component {
+
+  state = {
+    showWebcam: false
+  }
+
+  uploadWidget = (imageSrc) => {
+    // console.log('img', imageSrc)
+    cloudinary.config({
+      cloud_name: process.env.REACT_APP_CLOUD_NAME,
+      api_key: process.env.REACT_APP_API_KEY,
+      api_secret: process.env.REACT_APP_SECRET_KEY
+    });
+    cloudinary.uploader.upload(imageSrc, function(result) { console.log(result) })
+  }
+
+  showWebcam = e => {
+    this.setState(prevState => {
+      return {showWebcam: !prevState.showWebcam}
+    })
+  }
+
+
+
   render() {
+    // console.log(process.env.REACT_APP_CLOUD_NAME)
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h1>This is the Feelingz App from Mich!</h1>
+        <div className="App-components">
+          <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture}/>
+        </div>
       </div>
     );
   }
