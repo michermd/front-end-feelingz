@@ -11,6 +11,18 @@ class SignUpModal extends Component {
   open = () => this.setState({ open: true })
   close = () => this.setState({ open: false })
 
+  onValidSubmit = (formData) => {
+    const newUser = JSON.stringify(formData)
+    this.setState({
+      ...formData
+    })
+    fetch('http://localhost:3001/api/v1/users', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: newUser
+    })
+  }
+
   render() {
     const errorLabel = <Label color="red" pointing="left"/>;
     const styles = {
@@ -32,7 +44,6 @@ class SignUpModal extends Component {
               <Modal.Description>
                 <Segment>
                   <Container style={ styles.root }>
-                    <h1>Welcome to Feelingz</h1>
                     <Form
                       ref={ ref => this.form = ref }
                       onValidSubmit={ this.onValidSubmit }
@@ -87,6 +98,7 @@ class SignUpModal extends Component {
                             validations={"isWords", {minLength:6}}
                             errorLabel={ errorLabel }
                             validationErrors={{
+                              minLength: 'Minimum 6 characters',
                               isWords: 'No numbers or special characters allowed',
                               isDefaultRequiredValue: 'Username is Required'
                             }}

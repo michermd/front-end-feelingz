@@ -12,19 +12,6 @@ class Navbar extends Component {
   open = () => this.setState({ open: true })
   close = () => this.setState({ open: false })
 
-  onValidSubmit = (formData) => {
-    const newArtist = JSON.stringify(formData)
-    this.setState({
-      ...formData
-    })
-    fetch('http://localhost:3001/artists/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: newArtist
-    })
-  }
-
-
   render() {
     // console.log("State", this.state);
 

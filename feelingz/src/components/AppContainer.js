@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
-
-
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar'
 import CreateMyMood from './CreateMyMood'
-
 import WebcamCapture from './WebcamCapture.js';
+
+import HomePage from './HomePage'
+import LoginModal from './LoginModal'
+import SignUpModal from './SignUpModal'
 
 var cloudinary = require('cloudinary')
 
@@ -96,15 +98,19 @@ class AppContainer extends Component {
     return (
       <div>
         <Navbar />
-        <div className="App-components">
-          <Segment >
-            <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.state.selfie}/>
-          </Segment>
-          <Segment >
-            <CreateMyMood/>
-          </Segment>
-
-        </div>
+        <Segment >
+          <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.state.selfie}/>
+        </Segment>
+        <Segment >
+          <CreateMyMood/>
+        </Segment>
+        {/* <BrowserRouter>
+          <Switch >
+            <Route exact path='/' component={HomePage}/>
+            <Route exact path='/login' component={LoginModal}/>
+            <Route exact path='/signup' component={SignUpModal}/>
+          </Switch>
+        </BrowserRouter> */}
       </div>
     );
   }

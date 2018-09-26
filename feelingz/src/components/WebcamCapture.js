@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
+import { Segment } from 'semantic-ui-react'
+
 // import { cloudinary, CLOUD_NAME, UPLOAD_PRESET } from '../../api_keys'
 
 
@@ -28,11 +30,13 @@ class WebcamCapture extends Component {
             className="btn-outline-secondary rounded"
           />
 
-          <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
-          <div>
-            <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" aria-hidden="true" />
+          <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
+          <Segment>
+            <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
+
             <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</button>
-          </div>
+          </Segment>
+
         </div>
       );
     }

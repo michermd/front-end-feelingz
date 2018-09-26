@@ -17,7 +17,7 @@ class LoginModal extends Component {
     return (
       <Menu.Item>
         <Modal trigger={<Button basic color='green'>Login</Button>}>
-            <Modal.Header>Please enter your login and password</Modal.Header>
+            <Modal.Header>Please enter your Username and Password</Modal.Header>
             <Segment>
               <Modal.Description>
                 <Form
