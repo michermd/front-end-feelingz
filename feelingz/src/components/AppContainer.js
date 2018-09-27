@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import Navbar from './Navbar'
 import CreateMyMood from './CreateMyMood'
 import WebcamCapture from './WebcamCapture.js';
@@ -104,16 +104,14 @@ class AppContainer extends Component {
         <Segment >
           <CreateMyMood/>
         </Segment>
-        {/* <BrowserRouter>
           <Switch >
             <Route exact path='/' component={HomePage}/>
             <Route exact path='/login' component={LoginModal}/>
             <Route exact path='/signup' component={SignUpModal}/>
           </Switch>
-        </BrowserRouter> */}
       </div>
     );
   }
 }
 
-export default AppContainer;
+export default withRouter(AppContainer);

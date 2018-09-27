@@ -3,13 +3,12 @@ import AppContainer from './components/AppContainer'
 import './App.css';
 
 
+
 class App extends Component {
 
   render() {
     return (
-      <div>
-        <AppContainer />
-      </div>
+      <AppContainer />
     );
   }
 }

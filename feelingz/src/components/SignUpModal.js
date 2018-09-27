@@ -11,16 +11,19 @@ class SignUpModal extends Component {
   open = () => this.setState({ open: true })
   close = () => this.setState({ open: false })
 
-  onValidSubmit = (formData) => {
-    const newUser = JSON.stringify(formData)
-    this.setState({
-      ...formData
-    })
-    fetch('http://localhost:3001/api/v1/users', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: newUser
-    })
+  onValidSubmit = (formData) => {console.log(JSON.stringify(formData))
+    // const newUser = JSON.stringify(formData)
+    // this.setState({
+    //   ...formData
+    // })
+    // fetch('http://localhost:3001/api/v1/users/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: newUser
+    // })
   }
 
   render() {
@@ -108,7 +111,7 @@ class SignUpModal extends Component {
                             label="Password"
                             placeholder="Enter Password"
                             required
-                            hided="true"
+                            type="password"
                             // eslint-disable-next-line
                             validations={{minLength: 8}}
                             errorLabel={ errorLabel }
@@ -122,6 +125,7 @@ class SignUpModal extends Component {
                             label="Re-Enter Password"
                             placeholder="Enter again your Password"
                             required
+                            type="password"
                             // eslint-disable-next-line
                             validations={{equalsField: "password"}}
                             errorLabel={ <div style={ styles.customErrorLabel }/> }

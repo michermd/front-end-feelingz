@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
-import CreateMyMood from './CreateMyMood'
-import WebcamCapture from './WebcamCapture.js';
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 
 class HomePage extends Component {
@@ -10,10 +9,28 @@ class HomePage extends Component {
     return (
       <div>
         <Segment >
-          <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.state.selfie}/>
-        </Segment>
-        <Segment >
-          <CreateMyMood/>
+          <Card>
+            <Image src='../images/matthew.png' />
+            <Card.Content>
+              <Card.Header>Happyness</Card.Header>
+              <Card.Meta>
+                <span className='date'>September 20, 2018</span>
+              </Card.Meta>
+              <Card.Description>Joyful</Card.Description>
+              <Card.Description>Just finished my MVP.</Card.Description>
+            </Card.Content>
+          </Card>
+          <Card>
+            <Image src='../images/matthew.png' />
+            <Card.Content>
+              <Card.Header>Sad</Card.Header>
+              <Card.Meta>
+                <span className='date'>September 20, 2018</span>
+              </Card.Meta>
+              <Card.Description>Tense</Card.Description>
+              <Card.Description>Had some bad news.</Card.Description>
+            </Card.Content>
+          </Card>
         </Segment>
       </div>
     );
