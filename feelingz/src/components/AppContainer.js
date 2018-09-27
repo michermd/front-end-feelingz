@@ -53,9 +53,8 @@ class AppContainer extends Component {
       const params = {
           'returnFaceId': 'true',
           'returnFaceLandmarks': 'false',
-          'returnFaceAttributes': 'age,gender,smile,' +
+          'returnFaceAttributes': 'smile,emotion'
           // 'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
-              'emotion'
               // 'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
       };
 
@@ -106,6 +105,7 @@ class AppContainer extends Component {
         </Segment>
           <Switch >
             <Route exact path='/' component={HomePage}/>
+            <Route exact path='/index' component={WebcamCapture}/>
             <Route exact path='/login' component={LoginModal}/>
             <Route exact path='/signup' component={SignUpModal}/>
           </Switch>

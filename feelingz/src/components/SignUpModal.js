@@ -17,7 +17,6 @@ class SignUpModal extends Component {
     this.setState({
       ...formData
     })
-    debugger;
     fetch("http://localhost:3001/api/v1/users/", {
       method: "POST",
       headers: {

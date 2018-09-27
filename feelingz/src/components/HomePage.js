@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
+import profileImg from '.././images/matthew.png'
 
 
 class HomePage extends Component {
 
   render() {
     return (
-      <div>
-        <Segment >
+      <Segment>
+        <Card.Group itemsPerRow={2}>
           <Card>
-            <Image src='../images/matthew.png' />
+            <Image src={profileImg} />
             <Card.Content>
               <Card.Header>Happyness</Card.Header>
               <Card.Meta>
@@ -21,7 +22,7 @@ class HomePage extends Component {
             </Card.Content>
           </Card>
           <Card>
-            <Image src='../images/matthew.png' />
+            <Image src={profileImg} />
             <Card.Content>
               <Card.Header>Sad</Card.Header>
               <Card.Meta>
@@ -31,8 +32,8 @@ class HomePage extends Component {
               <Card.Description>Had some bad news.</Card.Description>
             </Card.Content>
           </Card>
-        </Segment>
-      </div>
+        </Card.Group>
+      </Segment>
     );
   }
 
