@@ -17,6 +17,7 @@ class SignUpModal extends Component {
     this.setState({
       ...formData
     })
+    debugger;
     fetch("http://localhost:3001/api/v1/users/", {
       method: "POST",
       headers: {
@@ -55,7 +56,7 @@ class SignUpModal extends Component {
                         <Form.Group widths="equal">
                           <Form.Input
                             required
-                            name="name_first"
+                            name="first_name"
                             label="First Name"
                             placeholder="First Name"
                             validations="isWords"
@@ -66,7 +67,7 @@ class SignUpModal extends Component {
                             }}
                           />
                           <Form.Input
-                            name="name_last"
+                            name="last_name"
                             label="Last Name"
                             placeholder="Last Name"
                             required
@@ -77,24 +78,10 @@ class SignUpModal extends Component {
                               isDefaultRequiredValue: 'Last Name is Required',
                             }}
                           />
-                          <Form.Input
-                            name="email"
-                            placeholder="username@domain.com"
-                            label="Email"
-                            icon="mail"
-                            instantValidation
-                            required
-                            validations="isEmail"
-                            validationErrors={{
-                              isEmail: 'This is not a valid email',
-                              isDefaultRequiredValue: 'Email is Required',
-                            }}
-                            errorLabel={ errorLabel }
-                          />
                         </Form.Group>
                         <Form.Group>
                           <Form.Input
-                            name="username"
+                            name="user_name"
                             label="Username"
                             placeholder="Username"
                             required
