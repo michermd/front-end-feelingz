@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
 import { Segment } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 // import { cloudinary, CLOUD_NAME, UPLOAD_PRESET } from '../../api_keys'
 
@@ -18,27 +19,47 @@ class WebcamCapture extends Component {
         height: 720,
         facingMode: "user"
       };
-      return (
-        <div>
-          <Webcam
-            audio={false}
-            height={720}
-            ref={this.setRef}
-            screenshotFormat="image/jpeg"
-            width={1280}
-            videoConstraints={videoConstraints}
-            className="btn-outline-secondary rounded"
-          />
+      console.log('current pciture', this.state.currentPicture);
+      if (this.state.currentPicture != null) {
+        return (
+          <div>
+            <Webcam
+              audio={false}
+              height={720}
+              ref={this.setRef}
+              screenshotFormat="image/jpeg"
+              width={1280}
+              videoConstraints={videoConstraints}
+              className="btn-outline-secondary rounded"
+            />
+            <Segment>
+              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
+              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</button>
+            </Segment>
 
-          <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
-          <Segment>
-            <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <Webcam
+              audio={false}
+              height={720}
+              ref={this.setRef}
+              screenshotFormat="image/jpeg"
+              width={1280}
+              videoConstraints={videoConstraints}
+              className="btn-outline-secondary rounded"
+            />
+            <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
+            <Segment>
+              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
+              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</button>
+            </Segment>
 
-            <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</button>
-          </Segment>
-
-        </div>
-      );
+          </div>
+        );
+      }
     }
     }
 

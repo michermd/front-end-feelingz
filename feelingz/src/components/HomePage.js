@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
 import { Card, Image } from 'semantic-ui-react'
-import profileImg from '.././images/matthew.png'
+import profileImg from '../images/matthew.png'
 
 
 class HomePage extends Component {

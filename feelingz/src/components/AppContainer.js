@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
 import { Switch, Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux'
 import Navbar from './Navbar'
 import CreateMyMood from './CreateMyMood'
 import WebcamCapture from './WebcamCapture.js';
@@ -8,17 +9,13 @@ import WebcamCapture from './WebcamCapture.js';
 import HomePage from './HomePage'
 import LoginModal from './LoginModal'
 import SignUpModal from './SignUpModal'
+import { toggleWebcam } from '../actions'
 
 var cloudinary = require('cloudinary')
 
 
 class AppContainer extends Component {
 
-  state = {
-    showWebcam: false,
-    selfie: null,
-    emotion: null
-  }
 
   uploadWidget = (imageSrc) => {
     // console.log('img', imageSrc)
@@ -85,9 +82,10 @@ class AppContainer extends Component {
   }
 
   showWebcam = e => {
-    this.setState(prevState => {
-      return {showWebcam: !prevState.showWebcam}
-    })
+    this.props.toggleWebcam()
+    // this.setState(prevState => {
+    //   return {showWebcam: !prevState.showWebcam}
+    // })
   }
 
 
@@ -97,15 +95,15 @@ class AppContainer extends Component {
     return (
       <div>
         <Navbar />
-        <Segment >
-          <WebcamCapture webcamStatus={this.state.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.state.selfie}/>
-        </Segment>
-        <Segment >
+        {/* <Segment >
+          <WebcamCapture webcamStatus={this.props.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.props.selfie}/>
+        </Segment> */}
+        {/* <Segment >
           <CreateMyMood/>
-        </Segment>
+        </Segment> */}
           <Switch >
             <Route exact path='/' component={HomePage}/>
-            <Route exact path='/index' component={WebcamCapture}/>
+            <Route exact path='/index' render={()=> <WebcamCapture webcamStatus={this.props.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.props.selfie}/>}/>
             <Route exact path='/login' component={LoginModal}/>
             <Route exact path='/signup' component={SignUpModal}/>
           </Switch>
@@ -114,4 +112,18 @@ class AppContainer extends Component {
   }
 }
 
-export default withRouter(AppContainer);
+const mapsStateToProps = (state) => {
+  return {
+    showWebcam: state.showWebcam,
+    selfie: state.selfie,
+    emotion: state.emotion
+  }
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     toggleWebcam: () => dispatch(toggleWebcam())
+//   }
+// }
+
+export default withRouter(connect(mapsStateToProps, {toggleWebcam}) (AppContainer));

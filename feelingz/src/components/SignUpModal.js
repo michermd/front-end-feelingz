@@ -110,7 +110,7 @@ class SignUpModal extends Component {
                           <Form.Input
                             name="RepeatedPassword"
                             label="Re-Enter Password"
-                            placeholder="Enter again your Password"
+                            placeholder="Confirm your Password"
                             required
                             type="password"
                             // eslint-disable-next-line
