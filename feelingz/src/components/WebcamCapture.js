@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
-import { Segment } from 'semantic-ui-react'
-import { connect } from 'react-redux'
+import { Segment, Button } from 'semantic-ui-react'
+import CreateMyMood from './CreateMyMood'
 
 // import { cloudinary, CLOUD_NAME, UPLOAD_PRESET } from '../../api_keys'
 
@@ -19,8 +19,8 @@ class WebcamCapture extends Component {
         height: 720,
         facingMode: "user"
       };
-      console.log('current pciture', this.state.currentPicture);
-      if (this.state.currentPicture != null) {
+      // console.log('current pciture', this.state.currentPicture);
+      if (!this.state.currentPicture ) {
         return (
           <div>
             <Webcam
@@ -33,10 +33,9 @@ class WebcamCapture extends Component {
               className="btn-outline-secondary rounded"
             />
             <Segment>
-              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
-              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</button>
+              <Button basic color='blue' onClick={this.capture}>Capture Selfie</Button>
+              <Button basic color='purple' onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</Button>
             </Segment>
-
           </div>
         )
       } else {
@@ -53,15 +52,15 @@ class WebcamCapture extends Component {
             />
             <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
             <Segment>
-              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={this.capture}>Capture Selfie</button>
-              <button className="cam-btn btn-outline-secondary rounded btn-lg" onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</button>
+              <Button basic color='blue' onClick={this.capture}>Capture Selfie</Button>
+              <Button basic color='purple' onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</Button>
             </Segment>
-
+            <CreateMyMood />
           </div>
         );
       }
     }
-    }
+  }
 
 
 
@@ -78,12 +77,12 @@ class WebcamCapture extends Component {
     };
 
     render() {
-      console.log(this.props.selfie);
+      // console.log(this.props.selfie);
 
       return(
         <div>
           <center>
-          <button  className="genres-btn btn btn-rounded btn-mdb-color btn-lg" onClick={this.props.showWebcam} href="#">Open Webcam</button>
+          <Button  basic color='purple' onClick={this.props.showWebcam} >Open Webcam</Button>
           {this.displayWebcam()}
           </center>
         </div>

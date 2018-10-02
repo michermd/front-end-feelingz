@@ -1,13 +1,67 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react'
 import { Form } from 'formsy-semantic-ui-react'
+import { connect } from 'react-redux'
+import { createMood } from '../actions'
+import { Route } from 'react-router-dom';
 
 
+
+
+const user = {
+  user_id: '1',
+  first_name: 'Daniel',
+  last_name: 'Micher',
+  user_name: 'michermd',
+  password: 'asdfasdf'
+}
 
 class CreateMyMood extends Component {
   state = {
     open: false
   }
+
+  onValidSubmit = (formData) => {
+    this.props.createMood(formData);
+  }
+
+  componentDidUpdate = () => {
+    // console.log('Component Updated', this.props);
+    if (this.props.mood !== null) {
+      const emotionsArray = this.props.emotion
+      const keys = Object.keys(emotionsArray);
+      const emotions = keys.sort(function(a, b) {
+        return emotionsArray[a] - emotionsArray[b]
+      });
+      const emotion = emotions[emotions.length-1];
+
+
+      const body = {
+        user_id: user.user_id,
+        img_url: this.props.selfie.url,
+        emotion: emotion,
+        mood: this.props.mood.mood,
+        activity: this.props.mood.activity,
+        journal: this.props.mood.journal
+      }
+
+      const JSONbody = JSON.stringify(body)
+      // console.log('Body', JSONbody)
+
+      fetch(`http://localhost:3001/api/v1/mood_posts/`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSONbody
+      })
+      .then(function(response) {
+        console.log(response)
+      })
+    }
+  }
+
 
 
 
@@ -41,12 +95,12 @@ class CreateMyMood extends Component {
         <h1>Tell me your Feelingz</h1>
         <Form ref={ ref => this.form = ref } onValidSubmit={ this.onValidSubmit }>
            <Form.Group widths='equal'>
-             <Form.Select label='Your Mood' options={moods} name='Mood' placeholder='Choose what mood you are on...' error />
-             <Form.Select label='Activity Level' options={activity} name='Activity Level' placeholder='Choose your activity level from 0 to 10' error />
+             <Form.Select label='Your Mood' options={moods} name='mood' placeholder='Choose what mood you are on...' error />
+             <Form.Select label='Activity Level' options={activity} name='activity' placeholder='Choose your activity level from 0 to 10' error />
            </Form.Group>
              <Form.TextArea label='Your Journal' name='journal' placeholder='Tell us more about your Feelingz' />
           <Form.Group>
-            <Form.Button content="Submit" color="green" open={this.state.open} onClick={this.close}/>
+            <Form.Button content="Submit" color="green" open={this.state.open} onClick={() => console.log('/my_moods')}/>
             <Form.Button type="button" content="Reset" onClick={ () => this.form.reset() }/>
           </Form.Group>
         </Form>
@@ -55,4 +109,16 @@ class CreateMyMood extends Component {
   }
 }
 
-export default CreateMyMood;
+const mapsStateToProps = (state) => {
+  // console.log('This STATE', state)
+  // console.log('This Mood', state.mood.mood)
+  // console.log('This Activity', state.mood.activity)
+  // console.log('This Journal', state.mood.journal)
+  return {
+    selfie: state.selfie,
+    mood: state.mood,
+    emotion: state.emotion
+  }
+}
+
+export default connect(mapsStateToProps, { createMood }) (CreateMyMood);

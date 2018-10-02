@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Segment } from 'semantic-ui-react'
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Navbar from './Navbar'
-import CreateMyMood from './CreateMyMood'
 import WebcamCapture from './WebcamCapture.js';
 
 import HomePage from './HomePage'
 import LoginModal from './LoginModal'
 import SignUpModal from './SignUpModal'
-import { toggleWebcam } from '../actions'
+import MyMoods from './MyMoods'
+import { toggleWebcam, uploadWidget, createEmotion } from '../actions'
 
 var cloudinary = require('cloudinary')
 
@@ -25,9 +24,11 @@ class AppContainer extends Component {
       api_secret: process.env.REACT_APP_SECRET_KEY
     });
     cloudinary.uploader.upload(imageSrc, (result) => {
-      this.setState({
-        selfie: result
-      }, this.analizeImg);
+      this.props.uploadWidget(result)
+      this.analizeImg()
+      // this.setState({
+      //   selfie: result
+      // }, this.analizeImg);
     })
 
   }
@@ -44,7 +45,7 @@ class AppContainer extends Component {
       // westus, replace "westcentralus" in the URL below with "westus".
       const uriBase = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/detect';
 
-      const imageUrl = this.state.selfie.secure_url;
+      const imageUrl = this.props.selfie.secure_url;
 
       // Request parameters.
       const params = {
@@ -72,20 +73,13 @@ class AppContainer extends Component {
           return;
         }
         let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
-        console.log('JSON Response', jsonResponse);
-        let emotionResponse = JSON.parse(jsonResponse)[0]
-
-        this.setState = {
-          emotion: {...emotionResponse }
-        }
+        let emotionResponse = JSON.parse(jsonResponse)[0].faceAttributes.emotion
+        this.props.createEmotion(emotionResponse)
       });
   }
 
   showWebcam = e => {
     this.props.toggleWebcam()
-    // this.setState(prevState => {
-    //   return {showWebcam: !prevState.showWebcam}
-    // })
   }
 
 
@@ -95,17 +89,12 @@ class AppContainer extends Component {
     return (
       <div>
         <Navbar />
-        {/* <Segment >
-          <WebcamCapture webcamStatus={this.props.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.props.selfie}/>
-        </Segment> */}
-        {/* <Segment >
-          <CreateMyMood/>
-        </Segment> */}
           <Switch >
             <Route exact path='/' component={HomePage}/>
             <Route exact path='/index' render={()=> <WebcamCapture webcamStatus={this.props.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.props.selfie}/>}/>
             <Route exact path='/login' component={LoginModal}/>
             <Route exact path='/signup' component={SignUpModal}/>
+            <Route exact path='/my_moods' component={MyMoods}/>
           </Switch>
       </div>
     );
@@ -116,7 +105,8 @@ const mapsStateToProps = (state) => {
   return {
     showWebcam: state.showWebcam,
     selfie: state.selfie,
-    emotion: state.emotion
+    emotion: state.emotion,
+    mood: state.mood
   }
 }
 
@@ -126,4 +116,4 @@ const mapsStateToProps = (state) => {
 //   }
 // }
 
-export default withRouter(connect(mapsStateToProps, {toggleWebcam}) (AppContainer));
+export default withRouter(connect(mapsStateToProps, {toggleWebcam, uploadWidget, createEmotion}) (AppContainer));
