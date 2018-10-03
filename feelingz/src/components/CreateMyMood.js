@@ -3,7 +3,6 @@ import { Container } from 'semantic-ui-react'
 import { Form } from 'formsy-semantic-ui-react'
 import { connect } from 'react-redux'
 import { createMood } from '../actions'
-import { Route } from 'react-router-dom';
 
 
 
@@ -46,7 +45,8 @@ class CreateMyMood extends Component {
       }
 
       const JSONbody = JSON.stringify(body)
-      // console.log('Body', JSONbody)
+      console.log('Emotions', emotionsArray)
+      console.log('Body', JSONbody)
 
       fetch(`http://localhost:3001/api/v1/mood_posts/`, {
         method: "POST",
@@ -100,7 +100,7 @@ class CreateMyMood extends Component {
            </Form.Group>
              <Form.TextArea label='Your Journal' name='journal' placeholder='Tell us more about your Feelingz' />
           <Form.Group>
-            <Form.Button content="Submit" color="green" open={this.state.open} onClick={() => console.log('/my_moods')}/>
+            <Form.Button content="Submit" color="green" open={this.state.open} onClick={() => console.log(this.props)}/>
             <Form.Button type="button" content="Reset" onClick={ () => this.form.reset() }/>
           </Form.Group>
         </Form>

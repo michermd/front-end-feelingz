@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
-import { Segment, Button } from 'semantic-ui-react'
+import { Segment, Button, Container } from 'semantic-ui-react'
 import CreateMyMood from './CreateMyMood'
 
 // import { cloudinary, CLOUD_NAME, UPLOAD_PRESET } from '../../api_keys'
@@ -8,7 +8,8 @@ import CreateMyMood from './CreateMyMood'
 
 class WebcamCapture extends Component {
   state = {
-      currentPicture: ''
+      currentPicture: '',
+      analizing: false
     }
 
 
@@ -22,13 +23,13 @@ class WebcamCapture extends Component {
       // console.log('current pciture', this.state.currentPicture);
       if (!this.state.currentPicture ) {
         return (
-          <div>
+          <Container>
             <Webcam
               audio={false}
-              height={720}
+              height={400}
               ref={this.setRef}
               screenshotFormat="image/jpeg"
-              width={1280}
+              // width={1280}
               videoConstraints={videoConstraints}
               className="btn-outline-secondary rounded"
             />
@@ -36,27 +37,35 @@ class WebcamCapture extends Component {
               <Button basic color='blue' onClick={this.capture}>Capture Selfie</Button>
               <Button basic color='purple' onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</Button>
             </Segment>
-          </div>
+          </Container>
         )
       } else {
         return (
-          <div>
+          <Container>
             <Webcam
               audio={false}
-              height={720}
+              height={400}
               ref={this.setRef}
               screenshotFormat="image/jpeg"
-              width={1280}
+              // width={1280}
               videoConstraints={videoConstraints}
               className="btn-outline-secondary rounded"
             />
-            <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
+            <Container>
+              <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
+            </Container>
             <Segment>
               <Button basic color='blue' onClick={this.capture}>Capture Selfie</Button>
-              <Button basic color='purple' onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</Button>
+              <Button basic color='purple' onClick={() => {
+                this.setState({
+                  analizing: true
+                })
+                this.props.uploadWidget(this.state.currentPicture)
+              }
+              }>Analize Emotion</Button>
             </Segment>
-            <CreateMyMood />
-          </div>
+            { this.state.analizing && <CreateMyMood />}
+          </Container>
         );
       }
     }
@@ -80,12 +89,12 @@ class WebcamCapture extends Component {
       // console.log(this.props.selfie);
 
       return(
-        <div>
+        <Segment>
           <center>
           <Button  basic color='purple' onClick={this.props.showWebcam} >Open Webcam</Button>
           {this.displayWebcam()}
           </center>
-        </div>
+        </Segment>
     )
     }
   }

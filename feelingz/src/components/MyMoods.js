@@ -17,13 +17,15 @@ class MyMoods extends Component {
 
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         <Container>
-          <Container>
-            <Button className='btn' basic color="purple" onClick={() => this.props.history.push('/index')}>Create a New Mood</Button>
-          </Container>
+          <Segment>
+            <center>
+              <Button className='btn' basic color="purple" onClick={() => this.props.history.push('/index')}>Create a New Mood</Button>
+            </center>
+          </Segment>
           <Segment>
             <Grid relaxed columns={4}>
               { this.props.user_moods.map(mood => {

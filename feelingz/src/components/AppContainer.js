@@ -34,48 +34,49 @@ class AppContainer extends Component {
   }
 
   analizeImg = () => {
-      // console.log(this.props.selfie.secure_url);
-      const request = require('request');
+    // debugger;
+    // console.log(this.props.selfie.secure_url);
+    const request = require('request');
 
-      // Replace <Subscription Key> with your valid subscription key.
-      const subscriptionKey = process.env.REACT_APP_KEY_1;
+    // Replace <Subscription Key> with your valid subscription key.
+    const subscriptionKey = process.env.REACT_APP_KEY_1;
 
-      // You must use the same location in your REST call as you used to get your
-      // subscription keys. For example, if you got your subscription keys from
-      // westus, replace "westcentralus" in the URL below with "westus".
-      const uriBase = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/detect';
+    // You must use the same location in your REST call as you used to get your
+    // subscription keys. For example, if you got your subscription keys from
+    // westus, replace "westcentralus" in the URL below with "westus".
+    const uriBase = 'https://eastus.api.cognitive.microsoft.com/face/v1.0/detect';
 
-      const imageUrl = this.props.selfie.secure_url;
+    const imageUrl = this.props.selfie.secure_url;
 
-      // Request parameters.
-      const params = {
-          'returnFaceId': 'true',
-          'returnFaceLandmarks': 'false',
-          'returnFaceAttributes': 'smile,emotion'
-          // 'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
-              // 'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
-      };
+    // Request parameters.
+    const params = {
+        'returnFaceId': 'true',
+        'returnFaceLandmarks': 'false',
+        'returnFaceAttributes': 'smile,emotion'
+        // 'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
+            // 'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+    };
 
-      const options = {
-          uri: uriBase,
-          qs: params,
-          // body: '{"url": ' + '"' + imageUrl + '"}',
-          body: `{"url": '${imageUrl}'}`,
-          headers: {
-              'Content-Type': 'application/json',
-              'Ocp-Apim-Subscription-Key' : subscriptionKey
-          }
-      };
-
-      request.post(options, (error, response, body) => {
-        if (error) {
-          console.log('Error: ', error);
-          return;
+    const options = {
+        uri: uriBase,
+        qs: params,
+        body: `{"url": '${imageUrl}'}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key' : subscriptionKey
         }
-        let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
-        let emotionResponse = JSON.parse(jsonResponse)[0].faceAttributes.emotion
-        this.props.createEmotion(emotionResponse)
-      });
+    };
+
+    request.post(options, (error, response, body) => {
+      if (error) {
+        console.log('Error: ', error);
+        return;
+      }
+      let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
+      let emotionResponse = JSON.parse(jsonResponse)[0].faceAttributes.emotion
+      this.props.createEmotion(emotionResponse)
+      console.log(emotionResponse)
+    });
   }
 
   showWebcam = e => {
@@ -85,7 +86,7 @@ class AppContainer extends Component {
 
 
   render() {
-    // console.log(process.env.REACT_APP_CLOUD_NAME)
+    // console.log('state', this.state)
     return (
       <div>
         <Navbar />
