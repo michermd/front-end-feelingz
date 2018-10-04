@@ -3,10 +3,7 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Navbar from './Navbar'
 import WebcamCapture from './WebcamCapture.js';
-
 import HomePage from './HomePage'
-import LoginModal from './LoginModal'
-import SignUpModal from './SignUpModal'
 import MyMoods from './MyMoods'
 import { toggleWebcam, uploadWidget, createEmotion } from '../actions'
 
@@ -26,15 +23,11 @@ class AppContainer extends Component {
     cloudinary.uploader.upload(imageSrc, (result) => {
       this.props.uploadWidget(result)
       this.analizeImg()
-      // this.setState({
-      //   selfie: result
-      // }, this.analizeImg);
     })
 
   }
 
   analizeImg = () => {
-    // debugger;
     // console.log(this.props.selfie.secure_url);
     const request = require('request');
 
@@ -93,8 +86,6 @@ class AppContainer extends Component {
           <Switch >
             <Route exact path='/' component={HomePage}/>
             <Route exact path='/index' render={()=> <WebcamCapture webcamStatus={this.props.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.props.selfie}/>}/>
-            <Route exact path='/login' component={LoginModal}/>
-            <Route exact path='/signup' component={SignUpModal}/>
             <Route exact path='/my_moods' component={MyMoods}/>
           </Switch>
       </div>

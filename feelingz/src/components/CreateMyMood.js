@@ -25,7 +25,6 @@ class CreateMyMood extends Component {
   }
 
   componentDidUpdate = () => {
-    // console.log('Component Updated', this.props);
     if (this.props.mood !== null) {
       const emotionsArray = this.props.emotion
       const keys = Object.keys(emotionsArray);
@@ -100,7 +99,7 @@ class CreateMyMood extends Component {
            </Form.Group>
              <Form.TextArea label='Your Journal' name='journal' placeholder='Tell us more about your Feelingz' />
           <Form.Group>
-            <Form.Button content="Submit" color="green" open={this.state.open} onClick={() => console.log(this.props)}/>
+            <Form.Button content="Submit" color="green" open={this.state.open} onClick={() => console.log('History', this.props.history)}/>
             <Form.Button type="button" content="Reset" onClick={ () => this.form.reset() }/>
           </Form.Group>
         </Form>
@@ -110,10 +109,6 @@ class CreateMyMood extends Component {
 }
 
 const mapsStateToProps = (state) => {
-  // console.log('This STATE', state)
-  // console.log('This Mood', state.mood.mood)
-  // console.log('This Activity', state.mood.activity)
-  // console.log('This Journal', state.mood.journal)
   return {
     selfie: state.selfie,
     mood: state.mood,
