@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MoodCard from './MoodCard'
+import MoodChart from './MoodChart'
 import { connect } from 'react-redux'
 import { getUserMoods } from '../actions'
 import { Grid, Container, Segment, Button } from 'semantic-ui-react';
@@ -37,6 +38,9 @@ class MyMoods extends Component {
                 })
               }
             </Grid>
+          </Segment>
+          <Segment>
+            <MoodChart/>
           </Segment>
         </Container>
       </div>
