@@ -17,7 +17,7 @@ class Navbar extends Component {
 
     return (
       <div>
-        <Menu>
+        <Menu >
           <Menu.Item>
             <Header as='h1'>
               <Icon name='camera retro' size='huge' />

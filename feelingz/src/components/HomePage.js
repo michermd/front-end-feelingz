@@ -13,12 +13,12 @@ class HomePage extends Component {
           <Card>
             <Image src={profileImg} />
             <Card.Content>
-              <Card.Header>Happyness</Card.Header>
+              <Card.Header>Happiness</Card.Header>
               <Card.Meta>
                 <span className='date'>September 20, 2018</span>
               </Card.Meta>
               <Card.Description>Joyful</Card.Description>
-              <Card.Description>Just finished my MVP.</Card.Description>
+              <Card.Description>Just finished my MVP!!! I am so excited!!!</Card.Description>
             </Card.Content>
           </Card>
           <Card>
@@ -29,7 +29,7 @@ class HomePage extends Component {
                 <span className='date'>September 20, 2018</span>
               </Card.Meta>
               <Card.Description>Tense</Card.Description>
-              <Card.Description>Had some bad news.</Card.Description>
+              <Card.Description>Project presentation is almost here!</Card.Description>
             </Card.Content>
           </Card>
         </Card.Group>

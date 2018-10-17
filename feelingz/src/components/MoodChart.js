@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import Polar from 'react-chartjs-2';
+
+
+
 
 const data = {
   datasets: [{
     data: [
-      11,
+      14,
       16,
       7,
       3,
@@ -45,16 +49,30 @@ class MoodChart extends Component {
 
 
   render() {
+    // const anger = () => {
+    //   let counter = 0
+    //   this.props.user_moods.map((mood) => {
+    //     if (mood.emotion === 'anger') {
+    //       counter += 1
+    //     }
+    //     console.log(counter)
+    //   })
+    // }
+    // console.log('props', this.props)
     return (
       <div>
-        <div>
-          <h2>My Moods</h2>
-          <Polar data={data} />
-        </div>
+        <h2>My Moods</h2>
+        <Polar data={data} />
       </div>
     );
   }
 };
 
 
-export default MoodChart;
+const mapsStateToProps = (state) => {
+  return {
+    user_moods: state.user_moods
+  }
+}
+
+export default connect(mapsStateToProps, null) (MoodChart);

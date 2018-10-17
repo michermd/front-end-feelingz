@@ -45,7 +45,7 @@ class AppContainer extends Component {
     const params = {
         'returnFaceId': 'true',
         'returnFaceLandmarks': 'false',
-        'returnFaceAttributes': 'smile,emotion'
+        'returnFaceAttributes': 'smile,emotion,age,gender'
         // 'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
             // 'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
     };
@@ -67,8 +67,10 @@ class AppContainer extends Component {
       }
       let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
       let emotionResponse = JSON.parse(jsonResponse)[0].faceAttributes.emotion
+      let allPhotoParams = JSON.parse(jsonResponse)[0]
       this.props.createEmotion(emotionResponse)
-      console.log(emotionResponse)
+      console.log('Emotion', emotionResponse)
+      console.log('All Params', allPhotoParams)
     });
   }
 
@@ -81,8 +83,8 @@ class AppContainer extends Component {
   render() {
     // console.log('state', this.state)
     return (
-      <div>
-        <Navbar />
+      <div >
+        <Navbar backgroundColor='9EADC8'/>
           <Switch >
             <Route exact path='/' component={HomePage}/>
             <Route exact path='/index' render={()=> <WebcamCapture webcamStatus={this.props.showWebcam} showWebcam={this.showWebcam} uploadWidget={this.uploadWidget} image={this.capture} selfie={this.props.selfie}/>}/>

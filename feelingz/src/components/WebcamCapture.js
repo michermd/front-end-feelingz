@@ -24,15 +24,17 @@ class WebcamCapture extends Component {
       if (!this.state.currentPicture ) {
         return (
           <Container>
-            <Webcam
-              audio={false}
-              height={400}
-              ref={this.setRef}
-              screenshotFormat="image/jpeg"
-              // width={1280}
-              videoConstraints={videoConstraints}
-              className="btn-outline-secondary rounded"
-            />
+            <center>
+              <Webcam
+                audio={false}
+                // height={700}
+                ref={this.setRef}
+                screenshotFormat="image/jpeg"
+                width={1280}
+                videoConstraints={videoConstraints}
+                className="btn-outline-secondary rounded"
+              />
+            </center>
             <Segment>
               <Button basic color='blue' onClick={this.capture}>Capture Selfie</Button>
               <Button basic color='purple' onClick={() => this.props.uploadWidget(this.state.currentPicture)}>Analize Emotion</Button>
@@ -42,18 +44,20 @@ class WebcamCapture extends Component {
       } else {
         return (
           <Container>
-            <Webcam
-              audio={false}
-              height={400}
-              ref={this.setRef}
-              screenshotFormat="image/jpeg"
-              // width={1280}
-              videoConstraints={videoConstraints}
-              className="btn-outline-secondary rounded"
-            />
-            <Container>
-              <img id="selfie" src={this.state.currentPicture} alt="Selfie" height="720" />
-            </Container>
+            <Segment>
+              <Webcam
+                audio={false}
+                // height={400}
+                ref={this.setRef}
+                screenshotFormat="image/jpeg"
+                width={1280}
+                videoConstraints={videoConstraints}
+                className="btn-outline-secondary rounded"
+              />
+            </Segment>
+            <Segment>
+              <img id="selfie" src={this.state.currentPicture} alt="Selfie" width="1000" />
+            </Segment>
             <Segment>
               <Button basic color='blue' onClick={this.capture}>Capture Selfie</Button>
               <Button basic color='purple' onClick={() => {
@@ -89,12 +93,14 @@ class WebcamCapture extends Component {
       // console.log(this.props.selfie);
 
       return(
-        <Segment>
-          <center>
-          <Button  basic color='purple' onClick={this.props.showWebcam} >Open Webcam</Button>
-          {this.displayWebcam()}
-          </center>
-        </Segment>
+        <Container>
+          <Segment>
+            <center>
+              <Button  basic color='purple' onClick={this.props.showWebcam} >Open Webcam</Button>
+              {this.displayWebcam()}
+            </center>
+          </Segment>
+        </Container>
     )
     }
   }

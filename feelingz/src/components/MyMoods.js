@@ -22,7 +22,7 @@ class MyMoods extends Component {
     return (
       <div>
         <Container>
-          <Segment>
+          <Segment >
             <center>
               <Button className='btn' basic color="purple" onClick={() => this.props.history.push('/index')}>Create a New Mood</Button>
             </center>
